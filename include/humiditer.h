@@ -13,7 +13,7 @@ private:
     const int ctrPin = 8; //TODO: insert right pin
 
     const int delayBeforeCtrOn = 1000;
-    const int impulseTimeOn = 1000;
+    const int impulseTimeOn = 200;
 
     const int perTime = 1000;
     const int mimHumVal = 65;
@@ -41,7 +41,11 @@ public:
     {
         if (tickTimer.tick())
         {
+            Serial.print("t- ");
             float hum = _dht->readHumidity();
+            Serial.println(_dht->readTemperature());
+            Serial.print("hum- ");
+            Serial.println(_dht->readHumidity());
 
             if (hum < mimHumVal && !isVccOn())
             {

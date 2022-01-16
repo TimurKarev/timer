@@ -21,11 +21,11 @@ private:
     {
         if (!on)
         {
-            digitalWrite(_heatPin, HIGH);
+            digitalWrite(_heatPin, HIGH); //OFF
         }
         else
         {
-            digitalWrite(_heatPin, LOW);
+            digitalWrite(_heatPin, LOW); // ON
         }
     }
 
@@ -45,28 +45,23 @@ private:
 public:
     TempHumWire(DHT* dht)
     {
+        _dht = dht;
         timerMs.setPeriodMode();
         timerMs.setTime(1000);
         timerMs.start();
 
         pinMode(_fanPin, OUTPUT);
+        digitalWrite(_fanPin, HIGH);
         pinMode(_heatPin, OUTPUT);
+        digitalWrite(_heatPin, HIGH);
     }
 
     void tick()
     {
-        float t = -1;
-        float hum = -1;
-
         if (timerMs.tick())
         {
-            t = _dht->readTemperature();
-            hum = _dht->readHumidity();
-            Serial.print("t- ");
-            Serial.println(t);
-            Serial.print("hum- ");
-            Serial.println(hum);
-
+            float t = _dht->readTemperature();
+            //hum = _dht->readHumidity();
             if (t < 25)
             {
                 _heatSwitch(true);
@@ -75,14 +70,14 @@ public:
             {
                 _heatSwitch(false);
             }
-            if (t > 29)
-            {
-                _fanSwitch(true);
-            }
-            if (t < 27)
-            {
-                _fanSwitch(false);
-            }
+            // if (t > 29)
+            // {
+            //     _fanSwitch(true);
+            // }
+            // if (t < 27)
+            // {
+            //     _fanSwitch(false);
+            // }
         }
     }
 };
