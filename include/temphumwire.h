@@ -41,17 +41,6 @@ private:
         }
     }
 
-    void _humSwitch(bool on)
-    {
-        if (!on)
-        {
-            digitalWrite(_humPin, HIGH);
-        }
-        else
-        {
-            digitalWrite(_humPin, LOW);
-        }
-    }
 
 public:
     TempHumWire(DHT* dht)
@@ -93,14 +82,6 @@ public:
             if (t < 27)
             {
                 _fanSwitch(false);
-            }
-            if (hum < 65)
-            {
-                _humSwitch(true);
-            }
-            if (hum > 80)
-            {
-                _humSwitch(false);
             }
         }
     }

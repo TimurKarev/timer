@@ -17,7 +17,6 @@ private:
 
     TimerMs timerMs;
 
-
     void switchLight()
     {
         if (isStartPeriod)
@@ -31,7 +30,12 @@ private:
         } else {
             timerMs.setTime(lightOffTime);
         }
-        timerMs.setTime(perTime);
+
+        setPin();
+    }
+
+    void setPin() {
+        if(lightOn) {
             digitalWrite(_pin, HIGH);
             digitalWrite(LED_BUILTIN, HIGH);
         } else {
