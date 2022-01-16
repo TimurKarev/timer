@@ -70,14 +70,14 @@ public:
             {
                 _heatSwitch(false);
             }
-            // if (t > 29)
-            // {
-            //     _fanSwitch(true);
-            // }
-            // if (t < 27)
-            // {
-            //     _fanSwitch(false);
-            // }
+            if (t > 29)
+            {
+                _fanSwitch(true);
+            }
+            if (t < 27)
+            {
+                _fanSwitch(false);
+            }
         }
     }
 };
