@@ -6,17 +6,16 @@
 #include <DHT.h>
 #include <DHT_U.h>
 
-#define WIRE_PIN 2
 #define _heatPin 5
 #define _fanPin 6
-#define _humPin 7
+//#define _humPin 7
 
 class TempHumWire
 {
 private:
     TimerMs timerMs;
 
-    DHT dht; //(WIRE_PIN, DHT11);
+    DHT* _dht; //(WIRE_PIN, DHT11);
 
     void _heatSwitch(bool on)
     {
@@ -55,15 +54,12 @@ private:
     }
 
 public:
-    TempHumWire() : dht(WIRE_PIN, DHT11)
+    TempHumWire(DHT* dht)
     {
         timerMs.setPeriodMode();
         timerMs.setTime(1000);
         timerMs.start();
-        dht.begin();
 
-        pinMode(WIRE_PIN, OUTPUT);
-        pinMode(_humPin, OUTPUT);
         pinMode(_fanPin, OUTPUT);
         pinMode(_heatPin, OUTPUT);
     }
@@ -75,8 +71,8 @@ public:
 
         if (timerMs.tick())
         {
-            t = dht.readTemperature();
-            hum = dht.readHumidity();
+            t = _dht->readTemperature();
+            hum = _dht->readHumidity();
             Serial.print("t- ");
             Serial.println(t);
             Serial.print("hum- ");

@@ -31,12 +31,7 @@ private:
         } else {
             timerMs.setTime(lightOffTime);
         }
-
-        setPin();
-    }
-
-    void setPin() {
-        if(lightOn) {
+        timerMs.setTime(perTime);
             digitalWrite(_pin, HIGH);
             digitalWrite(LED_BUILTIN, HIGH);
         } else {
