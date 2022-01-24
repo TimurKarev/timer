@@ -1,4 +1,5 @@
 #include "DHT.h"
+#include <DHT_U.h>   // когда на чистом си собираешь еще и такое надо ставить
 #define DHTPIN 2 // Тот самый номер пина, о котором упоминалось выше
 // Одна из следующих строк закоментирована. Снимите комментарий, если подключаете датчик DHT11 к arduino
 //DHT dht(DHTPIN, DHT22); //Инициация датчика
@@ -31,20 +32,17 @@ void loop() {
     return;
   }
   {
-    float h = dht.readHumidity(); //Измеряем влажность
-    float t = dht.readTemperature(); //Измеряем температуру
-    //Обогреватель
     if ((t) < 25) {
-      digitalWrite(PIN_Heating, HIGH);
+      digitalWrite(PIN_Heating, HIGH); //У нас подключено так, что включается при помощи LOW
     }
     if ((t) > 27) {
-      digitalWrite(PIN_Heating, LOW);
+      digitalWrite(PIN_Heating, LOW);  // а в эмуляторе ты подключил по другому, поэтому там работает а тут нет
     }
     //Вытяжка
     if ((t) > 29 || (h) > 95) {
       digitalWrite(PIN_Fan, HIGH);
     }
-    if ((t) < 29 & (h) < 90) {
+    if ((t) < 29 && (h) < 90) {  // сравнение это &&, одно & это операция побитного И
       digitalWrite(PIN_Fan, LOW);
     }
     //Испаритель питание
@@ -81,6 +79,7 @@ void loop() {
       digitalWrite ( ledPin, State );
     }
   }
+
   Serial.print("Влажность: ");
   Serial.print(h);
   Serial.print(" %\t");
